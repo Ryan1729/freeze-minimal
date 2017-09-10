@@ -135,7 +135,11 @@ fn make_texture_from_png(ctx: &gl::Gl, filename: &str) -> gl::types::GLuint {
 				println!("e: {:?}", (gl::RGBA, gl::UNSIGNED_BYTE));
 				println!("g: {:?}", (external_format, data_type));
 				
-				println!("{:?}", pixels);
+				let  v : Vec<u8> = match pixels {
+                            image_decoding::DecodingResult::U8(v) => v,
+                            image_decoding::DecodingResult::U16(v) => panic!(),
+                        };
+				
 				
                 unsafe {
                     ctx.GenTextures(1, &mut texture as _);
@@ -156,10 +160,7 @@ fn make_texture_from_png(ctx: &gl::Gl, filename: &str) -> gl::types::GLuint {
                         0,
                         external_format,
                         data_type,
-                        (match pixels {
-                            image_decoding::DecodingResult::U8(v) => v.as_ptr() as _,
-                            image_decoding::DecodingResult::U16(v) => v.as_ptr() as _,
-                        }),
+                        v.as_ptr() as _,
                     );
                 }
             }
