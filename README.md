@@ -1,9 +1,1 @@
-# Currrenly incomplete
-
-# Zark City
-
-This is a single-player only version of [the board game](http://www.looneylabs.com/rules/zark-city) which was designed for use with [Looney Pyramids](http://www.looneylabs.com/looney-pyramids)
-
-# TODO
-* better Cpu "AI"
-* start a another game after first one ends
+This is a more or less minimal example of a particular bug that causes the window to lock up when `glTexImage2d` is called.
