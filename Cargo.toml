@@ -1,0 +1,27 @@
+[package]
+name = "live-code-sdl2-opengl-2_1-template"
+version = "0.1.0"
+authors = ["Ryan1729 <Ryan1729@gmail.com>"]
+
+#this is needed the state manipulation dynamic lib is put in the right place
+[workspace]
+
+[dependencies]
+sdl2 = "0.30"
+#TODO can this be a dev deependacy?
+libloading = "0.4"
+lazy_static = "0.2"
+rusttype = "0.2.1"
+unicode-normalization = "0.1.5"
+
+[dependencies.open_gl_bindings]
+path = "./open_gl_bindings"
+
+[dependencies.common]
+path = "./common"
+
+[dependencies.state_manipulation]
+path = "./state_manipulation"
+
+[dependencies.image_decoding]
+path = "./image_decoding"
