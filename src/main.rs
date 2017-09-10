@@ -80,6 +80,32 @@ fn main() {
     let ctx = gl::Gl::load_with(|name| video_subsystem.gl_get_proc_address(name) as *const _);
     canvas.window().gl_set_context_to_current().unwrap();
 	
+	let pixels: Vec<u8> = vec![240; 256 * 256 * 4];
+	
+	let mut texture = 0;
+	unsafe {
+		ctx.GenTextures(1, &mut texture as _);
+
+		ctx.BindTexture(gl::TEXTURE_2D, texture);
+
+		ctx.TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::LINEAR as _);
+		ctx.TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::LINEAR as _);
+		ctx.TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_S, gl::CLAMP_TO_EDGE as _);
+		ctx.TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_T, gl::CLAMP_TO_EDGE as _);
+		println!("TexImage2D");
+		ctx.TexImage2D(
+			gl::TEXTURE_2D,
+			0,
+			gl::RGBA8 as _,
+			256 as _,
+			256 as _,
+			0,
+			gl::RGBA,
+			gl::UNSIGNED_BYTE,
+			pixels.as_ptr() as _,
+		);
+	}
+	
 	println!("pre make_texture_from_png");
 	//make_texture_from_png(&ctx, "images/texture0.png");
 	make_texture_from_png(&ctx, "images/256.png");
@@ -106,6 +132,11 @@ fn make_texture_from_png(ctx: &gl::Gl, filename: &str) -> gl::types::GLuint {
                     }
                 };
 
+				println!("e: {:?}", (gl::RGBA, gl::UNSIGNED_BYTE));
+				println!("g: {:?}", (external_format, data_type));
+				
+				println!("{:?}", pixels);
+				
                 unsafe {
                     ctx.GenTextures(1, &mut texture as _);
 
